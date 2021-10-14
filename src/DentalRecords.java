@@ -1,6 +1,8 @@
 import java.util.Locale;
 import java.util.Scanner;
 
+//Future note: implement printf to get proper formating, and accomodate for name capitilization
+
 public class DentalRecords {
     private static final Scanner keyboard = new Scanner(System.in);
 
@@ -15,7 +17,7 @@ public class DentalRecords {
         for (int i = 0; i < numPeople; i++) {
             System.out.print("Please enter the name for family member " + (i + 1) + "  : ");
             names[i] = keyboard.next();
-            dentalRecord = inputData(dentalRecord, names, i);
+            inputData(dentalRecord, names, i);
         }
         do{
             menuOption = getMenuOption();
@@ -47,7 +49,7 @@ public class DentalRecords {
     }
 
     //Gets the string of teeth
-    private static char[][][] inputData(char[][][] dentalRecord, String[] names, int i) {
+    private static void inputData(char[][][] dentalRecord, String[] names, int i) {
         String teeth;
 
         for (int j = 0; j < 2; j++) {
@@ -74,9 +76,6 @@ public class DentalRecords {
                 }
             }
         }
-
-
-        return dentalRecord;
     }
 
     //This checks to make sure the input for string of teeth makes sense
@@ -118,7 +117,7 @@ public class DentalRecords {
                 printOption(dentalRecord, names, numPeople);
                 break;
             case 'E':
-                dentalRecord = extractTeeth(dentalRecord, names, numPeople);
+                extractTeeth(dentalRecord, names, numPeople);
                 break;
             case 'R':
                 findRoots(dentalRecord, numPeople);
@@ -154,7 +153,7 @@ public class DentalRecords {
     }
 
     //Teeth Extraction, i.e., replacing a chosen B or C with an M
-    private static char[][][] extractTeeth(char[][][] dentalRecord, String[] names, int numPeople){
+    private static void extractTeeth(char[][][] dentalRecord, String[] names, int numPeople){
         String firstName;
         int familyNum = 6, jawNum, toothNum;
         char toothLayer;
@@ -199,7 +198,6 @@ public class DentalRecords {
 
         dentalRecord[familyNum][jawNum][toothNum] = 'M';
 
-        return dentalRecord;
     }
 
     //Makes sure the user chooses a removable tooth
