@@ -222,15 +222,15 @@ public class DentalRecords {
         for (int i = 0; i < numPeople; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 10; k++) {
-                 if(dentalRecord[i][j][k] == 'B'){
+                    if(dentalRecord[i][j][k] == 'B'){
                      ++bCount;
-                 }
-                 else if(dentalRecord[i][j][k] == 'C'){
-                     ++cCount;
-                 }
-                 else if(dentalRecord[i][j][k] == 'M'){
-                     --mCount;
-                 }
+                    }
+                    else if(dentalRecord[i][j][k] == 'C'){
+                        ++cCount;
+                    }
+                    else if(dentalRecord[i][j][k] == 'M') {
+                        --mCount;
+                    }
                 }
             }
         }
