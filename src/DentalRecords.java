@@ -1,7 +1,8 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-//Future note: implement printf to get proper formating, and accomodate for name capitilization
+//Future note: implement printf to get proper format, and then make sure the names don't have to be capitalized
+//Also remember to not let the text go too far off the page
 
 public class DentalRecords {
     private static final Scanner keyboard = new Scanner(System.in);
@@ -14,11 +15,7 @@ public class DentalRecords {
 
         welcomeMessage();
         numPeople = getPeople();
-        for (int i = 0; i < numPeople; i++) {
-            System.out.print("Please enter the name for family member " + (i + 1) + "  : ");
-            names[i] = keyboard.next();
-            inputData(dentalRecord, names, i);
-        }
+        inputData(dentalRecord, names, numPeople);
         do{
             menuOption = getMenuOption();
             menuChoices(menuOption, dentalRecord, names, numPeople);
@@ -49,30 +46,33 @@ public class DentalRecords {
     }
 
     //Gets the string of teeth
-    private static void inputData(char[][][] dentalRecord, String[] names, int i) {
+    private static void inputData(char[][][] dentalRecord, String[] names, int numPeople) {
         String teeth;
 
-        for (int j = 0; j < 2; j++) {
-            if (j == 0) {
-                System.out.print("Please enter the uppers for " + names[i] + "     : ");
-                teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                while(!validTeethType(teeth)){
-                    System.out.print("try again              : ");
+        for (int i = 0; i < numPeople; i++) {
+            System.out.print("Please enter the name for family member " + (i + 1) + "  : ");
+            names[i] = keyboard.next();
+            for (int j = 0; j < 2; j++) {
+                if (j == 0) {
+                    System.out.print("Please enter the uppers for " + names[i] + "     : ");
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                }
-                for (int k = 0; k < teeth.length(); k++) {
-                    dentalRecord[i][j][k] = teeth.charAt(k);
-                }
-            }
-            else{
-                System.out.print("Please enter the lowers for " + names[i] + "     : ");
-                teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                while(!validTeethType(teeth)){
-                    System.out.print("try again              : ");
+                    while (!validTeethType(teeth)) {
+                        System.out.print("try again              : ");
+                        teeth = keyboard.next().toUpperCase(Locale.ROOT);
+                    }
+                    for (int k = 0; k < teeth.length(); k++) {
+                        dentalRecord[i][j][k] = teeth.charAt(k);
+                    }
+                } else {
+                    System.out.print("Please enter the lowers for " + names[i] + "     : ");
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                }
-                for(int k = 0; k < teeth.length(); k++){
-                    dentalRecord[i][j][k] = teeth.charAt(k);
+                    while (!validTeethType(teeth)) {
+                        System.out.print("try again              : ");
+                        teeth = keyboard.next().toUpperCase(Locale.ROOT);
+                    }
+                    for (int k = 0; k < teeth.length(); k++) {
+                        dentalRecord[i][j][k] = teeth.charAt(k);
+                    }
                 }
             }
         }
