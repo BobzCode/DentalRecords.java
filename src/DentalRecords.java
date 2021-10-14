@@ -159,8 +159,8 @@ public class DentalRecords {
         int familyNum = 6, jawNum, toothNum;
         char toothLayer;
 
+        //Get family member
         System.out.print("Which family member                         : ");
-
         do{
             firstName = keyboard.next();
             for(int i = 0; i < numPeople; i++){
@@ -173,6 +173,7 @@ public class DentalRecords {
             }
         } while (familyNum == 6);
 
+        //Get tooth layer
         System.out.print("Which tooth layer (U)pper or (L)ower        : ");
         do{
             toothLayer = keyboard.next().toUpperCase(Locale.ROOT).charAt(0);
@@ -188,6 +189,7 @@ public class DentalRecords {
             jawNum = 1;
         }
 
+        //Get tooth to extract
         System.out.print("Which tooth number                          : ");
         toothNum = (keyboard.nextInt() - 1);
         while(!validToothNum(toothNum, dentalRecord, familyNum, jawNum)){
@@ -200,6 +202,7 @@ public class DentalRecords {
         return dentalRecord;
     }
 
+    //Makes sure the user chooses a removable tooth
     private static boolean validToothNum(int toothNum, char[][][] dentalRecord, int familyNum, int jawNum){
         if (toothNum > 9){
             System.out.print("Invalid tooth number, ");
@@ -228,16 +231,18 @@ public class DentalRecords {
                      ++cCount;
                  }
                  else if(dentalRecord[i][j][k] == 'M'){
-                     ++mCount;
+                     --mCount;
                  }
                 }
             }
         }
 
+        //Does the Math
         discriminant = Math.sqrt(Math.pow(cCount, 2) - (4*bCount*mCount));
         root1 = (-cCount + discriminant)/(2*bCount);
         root2 = (-cCount - discriminant)/(2*bCount);
 
+        //Prints the roots, depending on how many are real
         if (discriminant > 0){
             System.out.println("One root canal at     " + root1);
             System.out.println("Another root canal at " + root2);
