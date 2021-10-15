@@ -1,8 +1,6 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-//Future note: implement printf to get proper format
-//Also remember to not let the text go too far off the page
 
 public class DentalRecords {
     private static final Scanner keyboard = new Scanner(System.in);
@@ -56,6 +54,7 @@ public class DentalRecords {
             System.out.printf("Please enter the name for family member %-4d: ", i + 1);
             names[i] = keyboard.next();
             names[i] = names[i].substring(0,1).toUpperCase(Locale.ROOT) + names[i].substring(1);
+
             for (int j = 0; j < JAWLINES; j++) {
                 if (j == 0) {
                     System.out.printf("Please enter the uppers for %-16s: ", names[i]);
@@ -132,7 +131,7 @@ public class DentalRecords {
         }
     }
 
-    //Printing the inputs
+    //Printing the inputs, goes through each index with some nice formatting
     private static void printOption(char[][][] dentalRecord, String[] names, int numPeople){
 
         for (int i = 0; i < numPeople; i++) {
@@ -145,7 +144,8 @@ public class DentalRecords {
                     System.out.print("Lowers:");
                 }
                 for (int k = 0; k < MAX_TEETH; k++) {
-                    if(dentalRecord[i][j][k] == 'B' || dentalRecord[i][j][k] == 'C' || dentalRecord[i][j][k] == 'M'){
+                    if(dentalRecord[i][j][k] == 'B' || dentalRecord[i][j][k] == 'C'
+                            || dentalRecord[i][j][k] == 'M'){
                         System.out.print("  " + (k + 1) + ":" + dentalRecord[i][j][k]);
                     }
                 }
@@ -160,11 +160,12 @@ public class DentalRecords {
         int familyNum = 6, jawNum, toothNum;
         char toothLayer;
 
-        //Get family member
+        //Get family member, matching input with element in names array
         System.out.print("Which family member                         : ");
         do{
             firstName = keyboard.next();
             firstName = firstName.substring(0,1).toUpperCase(Locale.ROOT) + firstName.substring(1);
+
             for(int i = 0; i < numPeople; i++){
                 if (names[i].equals(firstName)){
                     familyNum = i;
@@ -184,6 +185,7 @@ public class DentalRecords {
             }
         } while(toothLayer != 'U' && toothLayer != 'L');
 
+        //Converting the char into the number used for the index
         if (toothLayer == 'U'){
             jawNum = 0;
         }
@@ -204,11 +206,12 @@ public class DentalRecords {
 
     //Makes sure the user chooses a removable tooth
     private static boolean validToothNum(int toothNum, char[][][] dentalRecord, int familyNum, int jawNum){
-        if (toothNum > 9){
+        if (toothNum > 9 || toothNum < 0){
             System.out.print("Invalid tooth number, try again             : ");
             return false;
         }
-        else if(dentalRecord[familyNum][jawNum][toothNum] != 'B' && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
+        else if(dentalRecord[familyNum][jawNum][toothNum] != 'B'
+                && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
             System.out.print("Missing tooth, try again                    : ");
             return false;
         }
