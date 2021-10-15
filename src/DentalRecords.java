@@ -1,16 +1,19 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-//Future note: implement printf to get proper format, and then make sure the names don't have to be capitalized
+//Future note: implement printf to get proper format
 //Also remember to not let the text go too far off the page
 
 public class DentalRecords {
     private static final Scanner keyboard = new Scanner(System.in);
+    private static final int MAX_FAMILY = 5;
+    private static final int JAWLINES = 2;
+    private static final int MAX_TEETH = 10;
 
     public static void main(String[] args) {
         int numPeople;
         char menuOption;
-        char[][][] dentalRecord = new char[5][2][10];
+        char[][][] dentalRecord = new char[MAX_FAMILY][JAWLINES][MAX_TEETH];
         String[] names = new String[5];
 
         welcomeMessage();
@@ -37,10 +40,10 @@ public class DentalRecords {
 
         do{
             numPeople = keyboard.nextInt();
-            if((numPeople <= 0) || (numPeople > 5)){
+            if((numPeople <= 0) || (numPeople > MAX_FAMILY)){
                 System.out.print("Invalid number of people, try again         : ");
             }
-        } while ((numPeople <= 0) || (numPeople > 5));
+        } while ((numPeople <= 0) || (numPeople > MAX_FAMILY));
 
         return numPeople;
     }
@@ -50,24 +53,23 @@ public class DentalRecords {
         String teeth;
 
         for (int i = 0; i < numPeople; i++) {
-            System.out.print("Please enter the name for family member " + (i + 1) + "  : ");
+            System.out.printf("Please enter the name for family member %-4d: ", i + 1);
             names[i] = keyboard.next();
-            for (int j = 0; j < 2; j++) {
+            names[i] = names[i].substring(0,1).toUpperCase(Locale.ROOT) + names[i].substring(1);
+            for (int j = 0; j < JAWLINES; j++) {
                 if (j == 0) {
-                    System.out.print("Please enter the uppers for " + names[i] + "     : ");
+                    System.out.printf("Please enter the uppers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     while (!validTeethType(teeth)) {
-                        System.out.print("try again              : ");
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
                         dentalRecord[i][j][k] = teeth.charAt(k);
                     }
                 } else {
-                    System.out.print("Please enter the lowers for " + names[i] + "     : ");
+                    System.out.printf("Please enter the lowers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     while (!validTeethType(teeth)) {
-                        System.out.print("try again              : ");
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
@@ -82,13 +84,13 @@ public class DentalRecords {
     private static boolean validTeethType(String teeth) {
 
         if (teeth.length() > 10) {
-            System.out.print("Too many teeth, ");
+            System.out.print("Too many teeth, try again                   : ");
             return false;
         }
         else {
             for (int i = 0; i < teeth.length(); i++) {
                 if (teeth.charAt(i) != 'B' && teeth.charAt(i) != 'C' && teeth.charAt(i) != 'M') {
-                    System.out.print("Invalid teeth types, ");
+                    System.out.print("Invalid teeth types, try again              : ");
                     return false;
                 }
             }
@@ -135,14 +137,14 @@ public class DentalRecords {
 
         for (int i = 0; i < numPeople; i++) {
             System.out.println(names[i]);
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < JAWLINES; j++) {
                 if (j ==0){
                     System.out.print("Uppers:");
                 }
                 else{
                     System.out.print("Lowers:");
                 }
-                for (int k = 0; k < 10; k++) {
+                for (int k = 0; k < MAX_TEETH; k++) {
                     if(dentalRecord[i][j][k] == 'B' || dentalRecord[i][j][k] == 'C' || dentalRecord[i][j][k] == 'M'){
                         System.out.print("  " + (k + 1) + ":" + dentalRecord[i][j][k]);
                     }
@@ -162,6 +164,7 @@ public class DentalRecords {
         System.out.print("Which family member                         : ");
         do{
             firstName = keyboard.next();
+            firstName = firstName.substring(0,1).toUpperCase(Locale.ROOT) + firstName.substring(1);
             for(int i = 0; i < numPeople; i++){
                 if (names[i].equals(firstName)){
                     familyNum = i;
@@ -192,7 +195,6 @@ public class DentalRecords {
         System.out.print("Which tooth number                          : ");
         toothNum = (keyboard.nextInt() - 1);
         while(!validToothNum(toothNum, dentalRecord, familyNum, jawNum)){
-            System.out.print("try again              : ");
             toothNum = (keyboard.nextInt() - 1);
             }
 
@@ -203,11 +205,11 @@ public class DentalRecords {
     //Makes sure the user chooses a removable tooth
     private static boolean validToothNum(int toothNum, char[][][] dentalRecord, int familyNum, int jawNum){
         if (toothNum > 9){
-            System.out.print("Invalid tooth number, ");
+            System.out.print("Invalid tooth number, try again             : ");
             return false;
         }
         else if(dentalRecord[familyNum][jawNum][toothNum] != 'B' && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
-            System.out.print("Missing tooth, ");
+            System.out.print("Missing tooth, try again                    : ");
             return false;
         }
         else{
@@ -220,8 +222,8 @@ public class DentalRecords {
         double bCount = 0, cCount = 0, mCount = 0, root1, root2, discriminant;
 
         for (int i = 0; i < numPeople; i++) {
-            for (int j = 0; j < 2; j++) {
-                for (int k = 0; k < 10; k++) {
+            for (int j = 0; j < JAWLINES; j++) {
+                for (int k = 0; k < MAX_TEETH; k++) {
                     if(dentalRecord[i][j][k] == 'B'){
                      ++bCount;
                     }
@@ -242,11 +244,11 @@ public class DentalRecords {
 
         //Prints the roots, depending on how many are real
         if (discriminant > 0){
-            System.out.println("One root canal at     " + root1);
-            System.out.println("Another root canal at " + root2);
+            System.out.printf("One root canal at %.2f\n", root1);
+            System.out.printf("Another root canal at %.2f\n", root2);
         }
         else if (discriminant == 0){
-            System.out.println("One root canal at     " + root1);
+            System.out.printf("One root canal at %.2f\n", root1);
         }
         else{
             System.out.println("No root canals");
