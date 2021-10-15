@@ -14,7 +14,7 @@ public class DentalRecords {
         int numPeople;
         char menuOption;
         char[][][] dentalRecord = new char[MAX_FAMILY][JAWLINES][MAX_TEETH];
-        String[] names = new String[5];
+        String[] names = new String[MAX_FAMILY];
 
         welcomeMessage();
         numPeople = getPeople();
@@ -83,7 +83,7 @@ public class DentalRecords {
     //This checks to make sure the input for string of teeth makes sense
     private static boolean validTeethType(String teeth) {
 
-        if (teeth.length() > 10) {
+        if (teeth.length() > MAX_TEETH) {
             System.out.print("Too many teeth, try again                   : ");
             return false;
         }
