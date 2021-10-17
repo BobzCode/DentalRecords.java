@@ -9,6 +9,7 @@ public class DentalRecords {
     private static final int MAX_TEETH = 10;
 //-----------------------------------------------------------------------------
     public static void main(String[] args) {
+
         int numPeople;
         char menuOption;
         char[][][] dentalRecord = new char[MAX_FAMILY][JAWLINES][MAX_TEETH];
@@ -26,12 +27,14 @@ public class DentalRecords {
 
 //---Welcome Message-------------------------------------------------------------
     private static void welcomeMessage() {
+
         System.out.println("Welcome to the Floridian Tooth Records");
         System.out.println("--------------------------------------");
     }
 
 //---Getting how many people-----------------------------------------------------
     private static int getPeople(){
+
         int numPeople ;
 
         System.out.print("Please enter number of people in the family : ");
@@ -47,6 +50,7 @@ public class DentalRecords {
     }
 //---Gets the names of people and the string of teeth, recording them in their respective arrays
     private static void inputData(char[][][] dentalRecord, String[] names, int numPeople) {
+
         String teeth;
 
         for (int i = 0; i < numPeople; i++) {
@@ -58,7 +62,7 @@ public class DentalRecords {
                 if (j == 0) {
                     System.out.printf("Please enter the uppers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                    while (!validTeethType(teeth)) {
+                    while (invalidTeethType(teeth)) {
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
@@ -67,7 +71,7 @@ public class DentalRecords {
                 } else {
                     System.out.printf("Please enter the lowers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                    while (!validTeethType(teeth)) {
+                    while (invalidTeethType(teeth)) {
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
@@ -79,25 +83,26 @@ public class DentalRecords {
     }
 
 //---This checks to make sure the input for string of teeth makes sense----------
-    private static boolean validTeethType(String teeth) {
+    private static boolean invalidTeethType(String teeth) {
 
         if (teeth.length() > MAX_TEETH) {
             System.out.print("Too many teeth, try again                   : ");
-            return false;
+            return true;
         }
         else {
             for (int i = 0; i < teeth.length(); i++) {
                 if (teeth.charAt(i) != 'B' && teeth.charAt(i) != 'C' && teeth.charAt(i) != 'M') {
                     System.out.print("Invalid teeth types, try again              : ");
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
     }
 
 //----Presents a Menu and gets their choice---------------------------------------
     private static char getMenuOption(){
+
         char menuOption;
 
         System.out.print("(P)rint, (E)xtract, (R)oot, e(X)it          : ");
@@ -111,8 +116,9 @@ public class DentalRecords {
         return menuOption;
     }
 
-//----The Menu of Methods------------------------------------------------------------------------------
-    private static void menuChoices(char menuOption, char[][][] dentalRecord, String[] names, int numPeople){
+//----The Menu of Methods--------------------------------------------------------------------------
+    private static void menuChoices(char menuOption, char[][][] dentalRecord, String[] names,
+ int numPeople){
         switch (menuOption) {
             case 'P':
                 printOption(dentalRecord, names, numPeople);
@@ -131,7 +137,7 @@ public class DentalRecords {
         }
     }
 
-//----Printing the inputs, goes through each index with some nice formatting--------------------
+//----Printing the inputs, goes through each index with some nice formatting-----------------------
     private static void printOption(char[][][] dentalRecord, String[] names, int numPeople){
 
         for (int i = 0; i < numPeople; i++) {
@@ -145,7 +151,7 @@ public class DentalRecords {
                 }
                 for (int k = 0; k < MAX_TEETH; k++) {
                     if(dentalRecord[i][j][k] == 'B' || dentalRecord[i][j][k] == 'C'
-                            || dentalRecord[i][j][k] == 'M'){
+ || dentalRecord[i][j][k] == 'M'){
                         System.out.print("  " + (k + 1) + ":" + dentalRecord[i][j][k]);
                     }
                 }
@@ -156,6 +162,7 @@ public class DentalRecords {
 
 //----Teeth Extraction, i.e., replacing a chosen B or C with an M-----------------------------
     private static void extractTeeth(char[][][] dentalRecord, String[] names, int numPeople){
+
         String firstName;
         int familyNum = 6, jawNum, toothNum;
         char toothLayer;
@@ -195,7 +202,7 @@ public class DentalRecords {
         //Get tooth to extract
         System.out.print("Which tooth number                          : ");
         toothNum = (keyboard.nextInt() - 1);
-        while(!validToothNum(toothNum, dentalRecord, familyNum, jawNum)){
+        while(invalidToothNum(toothNum, dentalRecord, familyNum, jawNum)){
             toothNum = (keyboard.nextInt() - 1);
             }
 
@@ -204,23 +211,26 @@ public class DentalRecords {
     }
 
 //----Makes sure the user chooses a removable tooth---------------------------------------
-    private static boolean validToothNum(int toothNum, char[][][] dentalRecord, int familyNum, int jawNum){
+    private static boolean invalidToothNum(int toothNum, char[][][] dentalRecord, int familyNum,
+ int jawNum){
+
         if (toothNum > 9 || toothNum < 0){
             System.out.print("Invalid tooth number, try again             : ");
-            return false;
+            return true;
         }
         else if(dentalRecord[familyNum][jawNum][toothNum] != 'B'
                 && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
             System.out.print("Missing tooth, try again                    : ");
-            return false;
+            return true;
         }
         else{
-            return true;
+            return false;
         }
     }
 
-//----Finds the square roots based on number of Bs, Cs, and Ms---------------------------------------
+//----Finds the square roots based on number of Bs, Cs, and Ms-------------------------------------
     private static void findRoots(char[][][] dentalRecord, int numPeople){
+
         double bCount = 0, cCount = 0, mCount = 0, root1, root2, discriminant;
 
         //Counts the B's, C's, and M's in the entire array
