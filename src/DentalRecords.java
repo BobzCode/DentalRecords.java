@@ -134,6 +134,7 @@ public class DentalRecords {
                 break;
             default:
                 System.out.print("How did this happen?");
+                break;
         }
     }
 
