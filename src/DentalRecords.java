@@ -15,18 +15,18 @@ public class DentalRecords {
         char[][][] dentalRecord = new char[MAX_FAMILY][JAWLINES][MAX_TEETH];
         String[] names = new String[MAX_FAMILY];
 
-        welcomeMessage();
+        printWelcome();
         numPeople = getPeople();
-        inputData(dentalRecord, names, numPeople);
+        getTeeth(dentalRecord, names, numPeople);
         do{
             menuOption = getMenuOption();
-            menuChoices(menuOption, dentalRecord, names, numPeople);
+            executeOption(menuOption, dentalRecord, names, numPeople);
         }while (menuOption != 'X');
 
     }
 
 //---Welcome Message-------------------------------------------------------------------------------
-    private static void welcomeMessage() {
+    private static void printWelcome() {
 
         System.out.println("Welcome to the Floridian Tooth Records");
         System.out.println("--------------------------------------");
@@ -49,7 +49,7 @@ public class DentalRecords {
         return numPeople;
     }
 //---Gets the names of people and the string of teeth, recording them in their respective arrays---
-    private static void inputData(char[][][] dentalRecord, String[] names, int numPeople) {
+    private static void getTeeth(char[][][] dentalRecord, String[] names, int numPeople) {
 
         String teeth;
 
@@ -62,7 +62,7 @@ public class DentalRecords {
                 if (j == 0) {
                     System.out.printf("Please enter the uppers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                    while (invalidTeethType(teeth)) {
+                    while (checkTeethType(teeth)) {
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
@@ -71,7 +71,7 @@ public class DentalRecords {
                 } else {
                     System.out.printf("Please enter the lowers for %-16s: ", names[i]);
                     teeth = keyboard.next().toUpperCase(Locale.ROOT);
-                    while (invalidTeethType(teeth)) {
+                    while (checkTeethType(teeth)) {
                         teeth = keyboard.next().toUpperCase(Locale.ROOT);
                     }
                     for (int k = 0; k < teeth.length(); k++) {
@@ -83,7 +83,7 @@ public class DentalRecords {
     }
 
 //---This checks to make sure the input for string of teeth makes sense----------------------------
-    private static boolean invalidTeethType(String teeth) {
+    private static boolean checkTeethType(String teeth) {
 
         if (teeth.length() > MAX_TEETH) {
             System.out.print("Too many teeth, try again                   : ");
@@ -117,11 +117,11 @@ public class DentalRecords {
     }
 
 //----The Menu of Methods--------------------------------------------------------------------------
-    private static void menuChoices(char menuOption, char[][][] dentalRecord, String[] names,
+    private static void executeOption(char menuOption, char[][][] dentalRecord, String[] names,
  int numPeople){
         switch (menuOption) {
             case 'P':
-                printOption(dentalRecord, names, numPeople);
+                printData(dentalRecord, names, numPeople);
                 break;
             case 'E':
                 extractTeeth(dentalRecord, names, numPeople);
@@ -139,7 +139,7 @@ public class DentalRecords {
     }
 
 //----Printing the inputs, goes through each index with some nice formatting-----------------------
-    private static void printOption(char[][][] dentalRecord, String[] names, int numPeople){
+    private static void printData(char[][][] dentalRecord, String[] names, int numPeople){
 
         for (int i = 0; i < numPeople; i++) {
             System.out.println(names[i]);
