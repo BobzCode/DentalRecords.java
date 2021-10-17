@@ -1,13 +1,13 @@
 import java.util.Locale;
 import java.util.Scanner;
-//=============================================================================
+//=================================================================================================
 public class DentalRecords {
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
     private static final Scanner keyboard = new Scanner(System.in);
     private static final int MAX_FAMILY = 5;
     private static final int JAWLINES = 2;
     private static final int MAX_TEETH = 10;
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
     public static void main(String[] args) {
 
         int numPeople;
@@ -25,14 +25,14 @@ public class DentalRecords {
 
     }
 
-//---Welcome Message-------------------------------------------------------------
+//---Welcome Message-------------------------------------------------------------------------------
     private static void welcomeMessage() {
 
         System.out.println("Welcome to the Floridian Tooth Records");
         System.out.println("--------------------------------------");
     }
 
-//---Getting how many people-----------------------------------------------------
+//---Getting how many people-----------------------------------------------------------------------
     private static int getPeople(){
 
         int numPeople ;
@@ -48,7 +48,7 @@ public class DentalRecords {
 
         return numPeople;
     }
-//---Gets the names of people and the string of teeth, recording them in their respective arrays
+//---Gets the names of people and the string of teeth, recording them in their respective arrays---
     private static void inputData(char[][][] dentalRecord, String[] names, int numPeople) {
 
         String teeth;
@@ -82,7 +82,7 @@ public class DentalRecords {
         }
     }
 
-//---This checks to make sure the input for string of teeth makes sense----------
+//---This checks to make sure the input for string of teeth makes sense----------------------------
     private static boolean invalidTeethType(String teeth) {
 
         if (teeth.length() > MAX_TEETH) {
@@ -100,7 +100,7 @@ public class DentalRecords {
         }
     }
 
-//----Presents a Menu and gets their choice---------------------------------------
+//----Presents a Menu and gets their choice--------------------------------------------------------
     private static char getMenuOption(){
 
         char menuOption;
@@ -160,7 +160,7 @@ public class DentalRecords {
         }
     }
 
-//----Teeth Extraction, i.e., replacing a chosen B or C with an M-----------------------------
+//----Teeth Extraction, i.e., replacing a chosen B or C with an M----------------------------------
     private static void extractTeeth(char[][][] dentalRecord, String[] names, int numPeople){
 
         String firstName;
@@ -210,7 +210,7 @@ public class DentalRecords {
 
     }
 
-//----Makes sure the user chooses a removable tooth---------------------------------------
+//----Makes sure the user chooses a removable tooth------------------------------------------------
     private static boolean invalidToothNum(int toothNum, char[][][] dentalRecord, int familyNum,
  int jawNum){
 
@@ -219,7 +219,7 @@ public class DentalRecords {
             return true;
         }
         else if(dentalRecord[familyNum][jawNum][toothNum] != 'B'
-                && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
+ && dentalRecord[familyNum][jawNum][toothNum] != 'C'){
             System.out.print("Missing tooth, try again                    : ");
             return true;
         }
@@ -257,7 +257,7 @@ public class DentalRecords {
 
         //Prints the roots, depending on how many are real
         if (discriminant > 0){
-            System.out.printf("One root canal at %.2f\n", root1);
+            System.out.printf("One root canal at     %.2f\n", root1);
             System.out.printf("Another root canal at %.2f\n", root2);
         }
         else if (discriminant == 0){
@@ -269,4 +269,4 @@ public class DentalRecords {
 
     }
 }
-//=============================================================================
+//=================================================================================================
